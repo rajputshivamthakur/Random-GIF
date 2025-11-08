@@ -6,7 +6,10 @@ import useGif from "../hooks/useGif";
 const API_KEY = process.env.REACT_APP_GIPHY_API_KEY;
 
 const Tag = () => {
-  const [tag, setTag] = useState("car");
+  const [tag, setTag] = useState("cute cat");
+  // Custom Hook Usage
+  const { gif, loading, fetchData } = useGif(tag);
+
   //   const [gif, setGif] = useState("");
   //   const [loading, setLoading] = useState(false);
 
@@ -23,17 +26,6 @@ const Tag = () => {
   //     fetchData();
   //   }, []);
 
-  // Custom Hook Usage
-  const { gif, loading, fetchData } = useGif(tag);
-
-  function changeHandler(event) {
-    setTag(event.target.value);
-  }
-
-  function clickHandler() {
-    fetchData(tag);
-  }
-
   return (
     <div className="w-1/2 bg-blue-500 rounded-lg border border-black flex flex-col items-center gap-y-5 mt-[15px]">
       <h1 className="text-2xl underline uppercase font-bold mt-[15px]">
@@ -44,13 +36,13 @@ const Tag = () => {
 
       <input
         className="w-10/12 text-lg py-2 rounded-lg mb-[3px] text-center"
-        onChange={changeHandler}
+        value={tag}
+        onChange={(event) => setTag(event.target.value)}
       />
 
       <button
-        onClick={clickHandler}
+        onClick={() => fetchData(tag)}
         className="w-10/12 bg-yellow-500 text-lg py-2 rounded-lg mb-[20px]"
-        value={tag}
       >
         Generate
       </button>
